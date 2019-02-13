@@ -1,0 +1,25 @@
+{
+  "contacts": [
+    {
+      "name": "Giovane Belizário de Souza",
+      "email": "giovane.souza@cardpecker.io",
+      "birth_date": "1994-09-10",
+      "phone": "+5511982589629",
+      "id": 1
+    },
+    {
+      "name": "Giovane",
+      "email": "teste.email@email.com",
+      "birth_date": "1994-09-10",
+      "phone": "+55 (11) 2917-6980_",
+      "id": 2
+    },
+    {
+      "name": "Humberto",
+      "email": "1berto@mail.com",
+      "birth_date": "1998-09-10",
+      "phone": "+55 (11) 9090-9090_",
+      "id": 3
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 <template>
-  <TituloLayout titulo="Agenda de Contatos">
+  <TitleLayout title="Agenda de Contatos">
     <b-row>
       <b-col>
-        <FiltroConsultaContatos
+        <ContactsSearchFilter
           @filter="onFilter"
           @reset="onFilter(null)" />
       </b-col>
@@ -10,26 +10,44 @@
 
     <hr />
 
-    <b-row>
+    <b-row class="mb-3">
       <b-col>
-        <TabelaContatos
-          :sorting="sort"
-          :contacts-page="contacts"
-          @sort="onSort" />
-        <b-pagination v-if="totalPages > 1" />
+        Total: {{ totalCount }}
+      </b-col>
+      <b-col class="text-right">
+        <b-button
+          size="sm"
+          variant="outline-secondary"
+          :to="{ name: 'contacts-new' }">
+          Cadastrar novo
+        </b-button>
       </b-col>
     </b-row>
-  </TituloLayout>
+
+    <b-row>
+      <b-col>
+        <ContactsSearchTable
+          :sorting="sort"
+          :contacts="contacts"
+          @sort="onSort" />
+
+        <b-pagination
+          v-if="totalPages > 1"
+          :total-rows="totalCount"
+          :per-page="limit" />
+      </b-col>
+    </b-row>
+  </TitleLayout>
 </template>
 
 <script>
   import axios from 'axios';
-  import FiltroConsultaContatos from './components/FiltroConsultaContatos.vue';
-  import TabelaContatos from './components/TabelaContatos.vue';
+  import ContactsSearchFilter from './components/ContactsSearchFilter.vue';
+  import ContactsSearchTable from './components/ContactsSearchTable.vue';
 
   export default {
-    name: 'ConsultaContatos',
-    components: { FiltroConsultaContatos, TabelaContatos },
+    name: 'ContactsSearch',
+    components: { ContactsSearchFilter, ContactsSearchTable },
     data,
     methods: {
       onFilter,
@@ -42,7 +60,7 @@
   function data() {
     return {
       filter: null,
-      contacts: null,
+      contacts: [],
       page: 0,
       sort: null,
       limit: 10,

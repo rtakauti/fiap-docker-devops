@@ -2,7 +2,7 @@
   <div>
     <b-row>
       <b-col>
-        <h1>{{ titulo }}</h1>
+        <h1>{{ title }}</h1>
       </b-col>
     </b-row>
     <slot />
@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: 'TituloLayout',
-    props: ['titulo']
+    name: 'TitleLayout',
+    props: ['title']
   };
 </script>

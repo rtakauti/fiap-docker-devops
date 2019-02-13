@@ -1,0 +1,25 @@
+version: '2'
+services:
+
+  webapp:
+    build: webapp/.
+    ports:
+      - '4200:80'
+    links:
+      - api
+    depends_on:
+      - api
+
+  api:
+    build: api/.
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456

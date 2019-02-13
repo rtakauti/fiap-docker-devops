@@ -19,18 +19,6 @@
       </b-col>
 
       <b-col>
-        <b-form-group label="Data de nascimento">
-          <masked-input
-            class="form-control"
-            v-model="$v.birthDate.$model"
-            :mask="dateMask" />
-          <b-form-invalid-feedback :force-show="$v.birthDate.date === false">
-            Data inválida
-          </b-form-invalid-feedback>
-        </b-form-group>
-      </b-col>
-
-      <b-col>
         <b-form-group label="Celular">
           <masked-input
             class="form-control"
@@ -61,13 +49,12 @@
 
 <script>
   import email from 'vuelidate/lib/validators/email';
-  import { DateMask, PhoneMask } from '@/utils/masks';
-  import { DateValidator } from '@/utils/validators';
+  import { PhoneMask } from '@/utils/masks';
 
   const LOCALSTORAGE_KEY = 'contacts/filter';
 
   export default {
-    name: 'FiltroConsultaContatos',
+    name: 'ContactsSearchFilter',
     data,
     validations,
     methods: {
@@ -89,25 +76,18 @@
     return {
       name: savedFilter.name || null,
       email: savedFilter.email || null,
-      birthDate: savedFilter.birthDate || null,
       phone: savedFilter.phone || null,
-      dateMask: DateMask,
       phoneMask: PhoneMask
     };
   }
 
   function validations() {
     const validations = {
-      email: {},
-      birthDate: {}
+      email: {}
     };
 
     if (this.email) {
       validations.email.email = email;
-    }
-
-    if (this.birthDate) {
-      validations.birthDate.date = DateValidator;
     }
 
     return validations;
@@ -117,7 +97,6 @@
     const filter = {
       name: this.name,
       email: this.email,
-      birthDate: this.birthDate,
       phone: this.phone
     }
 
@@ -130,7 +109,6 @@
     localStorage.removeItem(LOCALSTORAGE_KEY);
     this.name = null;
     this.email = null;
-    this.birthDate = null;
     this.phone = null;
     this.$emit('reset');
   }
