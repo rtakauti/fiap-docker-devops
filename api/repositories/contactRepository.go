@@ -93,7 +93,7 @@ func (repository *dbContactRepository) Insert(contact datamodels.Contact) (inser
 func (repository *dbContactRepository) Update(id int, contact datamodels.Contact) (updatedContact datamodels.Contact, err error) {
 	stmt, err := repository.Conn.Prepare("UPDATE tblContato SET Nome = ?, Email = ?, Phone = ? WHERE Id = ?")
 
-	res, err := stmt.Exec(contact.Name, contact.Email, contact.Phone, id)
+	_, err = stmt.Exec(contact.Name, contact.Email, contact.Phone, id)
 	if err != nil {
 		panic(err.Error())
 	}
