@@ -74,11 +74,32 @@ func (repository *dbContactRepository) GetById(id int) (result datamodels.Contac
 }
 
 func (repository *dbContactRepository) Insert(contact datamodels.Contact) (insertedContact datamodels.Contact, err error) {
+	stmt, err := repository.Conn.Prepare("INSERT INTO tblContato(Name, Email, Phone) VALUES(?,?,?)")
+
+	res, err := stmt.Exec(contact.Name, contact.Email, contact.Phone)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	id, err := res.LastInsertId()
+
+	contact.Id = int(id)
+
+	insertedContact = contact
 
 	return insertedContact, err
 }
 
 func (repository *dbContactRepository) Update(id int, contact datamodels.Contact) (updatedContact datamodels.Contact, err error) {
+	stmt, err := repository.Conn.Prepare("UPDATE tblContato SET Nome = ?, Email = ?, Phone = ? WHERE Id = ?")
+
+	res, err := stmt.Exec(contact.Name, contact.Email, contact.Phone, id)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	updatedContact = contact
+	updatedContact.Id = id
 
 	return updatedContact, err
 }

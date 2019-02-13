@@ -57,6 +57,25 @@ func main() {
 		ctx.JSON(inserterContact)
 	})
 
+	app.Put("/contatos/{id:int}", func(ctx iris.Context) {
+		var contact datamodels.Contact
+		ctx.ReadJSON(&contact)
+		id, _ := ctx.Params().GetInt("id")
+
+		updatedContact, err := contactService.Update(id,contact)
+		if err == nil {
+			ctx.StatusCode(iris.StatusInternalServerError)
+			return
+		}
+
+		if updatedContact = nil{
+			ctx.StatusCode(iris.StatusNotFound)
+			return
+		}
+
+		ctx.JSON(updatedContact)
+	})
+
 	app.Run(
 		// Start the web server at localhost:8080
 		iris.Addr("localhost:8080"),
