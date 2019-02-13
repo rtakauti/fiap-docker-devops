@@ -37,7 +37,7 @@ func (repository *dbContactRepository) GetAll() (results []datamodels.Contact) {
 	}
 	for selDB.Next() {
 		contact := datamodels.Contact{}
-		err = selDB.Scan(&contact.Id, &contact.Name, &contact.Email, &contact.Phone, &contact.BirthDate)
+		err = selDB.Scan(&contact.Id, &contact.Name, &contact.Email, &contact.Phone)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -61,7 +61,7 @@ func (repository *dbContactRepository) GetById(id int) (result datamodels.Contac
 	res, err := stmt.Query(id)
 	for res.Next() {
 		contact := datamodels.Contact{}
-		err = res.Scan(&contact.Id, &contact.Name, &contact.Email, &contact.Phone, &contact.BirthDate)
+		err = res.Scan(&contact.Id, &contact.Name, &contact.Email, &contact.Phone)
 		if err != nil {
 			panic(err.Error())
 		}
