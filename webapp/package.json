@@ -1,0 +1,30 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "poi --serve src/main.js",
+    "build": "poi --prod src/main.js",
+    "json-server": "json-server src/mock.json --port 8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "json-server": "^0.14.2",
+    "poi": "^12.5.5",
+    "vue-template-compiler": "^2.6.6"
+  },
+  "dependencies": {
+    "axios": "0.18.0",
+    "bootstrap": "4.3.0",
+    "bootstrap-vue": "2.0.0-rc.11",
+    "moment": "2.24.0",
+    "vue": "2.6.6",
+    "vue-router": "3.0.2",
+    "vue-text-mask": "6.1.2",
+    "vuelidate": "0.7.4"
+  }
+}
