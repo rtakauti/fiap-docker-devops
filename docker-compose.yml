@@ -12,6 +12,10 @@ services:
 
   api:
     build: api/.
+    environment:
+      DB_NAME: 'go'
+      DB_USER: 'root'
+      DB_PASSWORD: 123456
     links:
       - mysql
     depends_on:
@@ -20,4 +24,5 @@ services:
   mysql:
     build: mysql/.
     environment:
+      MYSQL_DATABASE: 'go'
       MYSQL_ROOT_PASSWORD: 123456

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"github.com/kataras/iris"
 )
 
@@ -10,9 +11,9 @@ func main() {
 
 	conf := &DatabaseConf{
 		DBDriver: "mysql",
-		DBUser:   "root",
-		DBPass:   "123456",
-		DBName:   "go",
+		DBUser:   os.Getenv("DB_USER"),
+		DBPass:   os.Getenv("DB_PASSWORD"),
+		DBName:   os.Getenv("DB_NAME"),
 	}
 	repo := NewContactRepository(DBConn(conf))
 
