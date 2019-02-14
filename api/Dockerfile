@@ -1,14 +1,17 @@
-FROM goland:1.11.5-alpine3.8 as build-stage
+FROM golang:1.11.5-alpine3.8 as build-stage
 
-WORKDIR /go/src/app
-COPY web .
-COPY repositories .
-COPY services .
-COPY shared .
-COPY web .
+RUN apk add --update git
+
+WORKDIR /go/src/api
+COPY datamodels/ ./datamodels/
+COPY repositories/ ./repositories/
+COPY services/ ./services/
+COPY shared/ ./shared/
+COPY main.go ./
 
 RUN go get -d -v ./...
-RUN go install -v ./...
+RUN go install
 
-FROM goland:1.11.5-alpine3.8 as production-stage
-CMD ["app"]
+FROM golang:1.11.5-alpine3.8 as production-stage
+EXPOSE 80
+CMD ["api"]

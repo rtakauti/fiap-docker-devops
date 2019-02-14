@@ -2,9 +2,7 @@ package repositories
 
 import (
 	"database/sql"
-
-	"../datamodels"
-
+	"api/datamodels"
 	_ "github.com/go-sql-driver/mysql"
 )
 

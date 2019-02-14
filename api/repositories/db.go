@@ -3,7 +3,7 @@ package repositories
 import (
 	"database/sql"
 
-	"../shared"
+	"api/shared"
 	_ "github.com/go-sql-driver/mysql"
 )
 

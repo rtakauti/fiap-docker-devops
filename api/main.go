@@ -1,10 +1,10 @@
-package main
+package api
 
 import (
-	"../datamodels"
-	"../repositories"
-	"../services"
-	"../shared"
+	"api/datamodels"
+	"api/repositories"
+	"api/services"
+	"api/shared"
 	"github.com/kataras/iris"
 )
 
@@ -68,7 +68,7 @@ func main() {
 			return
 		}
 
-		if updatedContact = nil{
+		if updatedContact == nil {
 			ctx.StatusCode(iris.StatusNotFound)
 			return
 		}
@@ -78,7 +78,7 @@ func main() {
 
 	app.Run(
 		// Start the web server at localhost:8080
-		iris.Addr("localhost:8080"),
+		iris.Addr("localhost:80"),
 		// enables faster json serialization and more:
 		iris.WithOptimizations,
 	)

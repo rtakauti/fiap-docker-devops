@@ -1,17 +1,17 @@
 package services
 
 import (
-	"../datamodels"
-	"../repositories"
+	"api/datamodels"
+	"api/repositories"
 )
 
 // ContactService interface
 type ContactService interface {
 	GetAll() []datamodels.Contact
-	GetById(id int64) (datamodels.Contact, bool)
-	Delete(id int64) bool
+	GetById(id int) (datamodels.Contact, bool)
+	Delete(id int) bool
 	Insert(item datamodels.Contact) (datamodels.Contact, error)
-	Update(id int64, item datamodels.Contact) (datamodels.Contact, error)
+	Update(id int, item datamodels.Contact) (datamodels.Contact, error)
 }
 
 // NewContactService contructor
@@ -27,7 +27,7 @@ type ContactServiceRepo struct {
 }
 
 // GetById return item by id
-func (s *ContactServiceRepo) GetById(id int64) datamodels.Contact {
+func (s *ContactServiceRepo) GetById(id int) datamodels.Contact {
 	return s.Repo.GetById(id)
 }
 
@@ -37,7 +37,7 @@ func (s *ContactServiceRepo) GetAll() []datamodels.Contact {
 }
 
 // Delete delete item
-func (s *ContactServiceRepo) Delete(id int64) (deleted bool) {
+func (s *ContactServiceRepo) Delete(id int) (deleted bool) {
 	return s.Repo.Delete(id)
 }
 
@@ -47,6 +47,6 @@ func (s *ContactServiceRepo) Insert(item datamodels.Contact) (datamodels.Contact
 }
 
 // Insert insert item
-func (s *ContactServiceRepo) Update(id int64, item datamodels.Contact) (datamodels.Contact, error) {
+func (s *ContactServiceRepo) Update(id int, item datamodels.Contact) (datamodels.Contact, error) {
 	return s.Repo.Update(id, item)
 }
