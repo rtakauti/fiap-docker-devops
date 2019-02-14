@@ -1,14 +1,19 @@
-package repositories
+package main
 
 import (
 	"database/sql"
-
-	"api/shared"
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type DatabaseConf struct {
+	DBDriver string
+	DBUser   string
+	DBPass   string
+	DBName   string
+}
+
 // DBConn retorna conexa com o dabatase
-func DBConn(conf *shared.DatabaseConf) (db *sql.DB) {
+func DBConn(conf *DatabaseConf) (db *sql.DB) {
 	dbDriver := conf.DBDriver
 	dbUser := conf.DBUser
 	dbPass := conf.DBPass

@@ -1,10 +1,6 @@
-package api
+package main
 
 import (
-	"api/datamodels"
-	"api/repositories"
-	"api/services"
-	"api/shared"
 	"github.com/kataras/iris"
 )
 
@@ -12,29 +8,30 @@ func main() {
 	app := iris.New()
 	app.Logger().SetLevel("debug")
 
-	conf := &shared.DatabaseConf{
+	conf := &DatabaseConf{
 		DBDriver: "mysql",
 		DBUser:   "root",
 		DBPass:   "123456",
 		DBName:   "go",
 	}
-	repo := repositories.NewContactRepository(repositories.DBConn(conf))
+	repo := NewContactRepository(DBConn(conf))
 
-	contactService := services.NewContactService(repo)
+	contactService := NewContactService(repo)
 
-	app.Get("/contatos", func(ctx iris.Context) {
+	app.Get("/contacts", func(ctx iris.Context) {
 		ctx.JSON(contactService.GetAll())
 	})
 
-	app.Get("/contatos/{id:int}", func(ctx iris.Context) {
-		contact := contactService.Get(ctx.Params().GetInt("id"))
-		if contact != nil {
+	app.Get("/contacts/{id:int}", func(ctx iris.Context) {
+		id, _ := ctx.Params().GetInt("id")
+		contact := contactService.GetById(id)
+		if &contact != nil {
 			ctx.JSON(contact)
 		}
 		ctx.StatusCode(iris.StatusNotFound)
 	})
 
-	app.Delete("/contatos/{id:int}", func(ctx iris.Context) {
+	app.Delete("/contacts/{id:int}", func(ctx iris.Context) {
 		id, _ := ctx.Params().GetInt("id")
 		exists := contactService.Delete(id)
 		if !exists {
@@ -45,8 +42,8 @@ func main() {
 		return
 	})
 
-	app.Post("/contatos", func(ctx iris.Context) {
-		var contact datamodels.Contact
+	app.Post("/contacts", func(ctx iris.Context) {
+		var contact Contact
 		ctx.ReadJSON(&contact)
 
 		inserterContact, err := contactService.Insert(contact)
@@ -57,8 +54,8 @@ func main() {
 		ctx.JSON(inserterContact)
 	})
 
-	app.Put("/contatos/{id:int}", func(ctx iris.Context) {
-		var contact datamodels.Contact
+	app.Put("/contacts/{id:int}", func(ctx iris.Context) {
+		var contact Contact
 		ctx.ReadJSON(&contact)
 		id, _ := ctx.Params().GetInt("id")
 
@@ -68,7 +65,7 @@ func main() {
 			return
 		}
 
-		if updatedContact == nil {
+		if &updatedContact == nil {
 			ctx.StatusCode(iris.StatusNotFound)
 			return
 		}
@@ -78,7 +75,7 @@ func main() {
 
 	app.Run(
 		// Start the web server at localhost:8080
-		iris.Addr("localhost:80"),
+		iris.Addr(":80"),
 		// enables faster json serialization and more:
 		iris.WithOptimizations,
 	)

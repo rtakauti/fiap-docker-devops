@@ -1,18 +1,17 @@
-package repositories
+package main
 
 import (
 	"database/sql"
-	"api/datamodels"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 // ContactRepository
 type ContactRepository interface {
-	GetAll() (results []datamodels.Contact)
-	Get(contact datamodels.Contact) (results []datamodels.Contact)
-	GetById(id int) (result datamodels.Contact)
-	Insert(contact datamodels.Contact) (insertedContact datamodels.Contact, err error)
-	Update(id int, contact datamodels.Contact) (updatedContact datamodels.Contact, err error)
+	GetAll() (results []Contact)
+	Get(contact Contact) (results []Contact)
+	GetById(id int) (result Contact)
+	Insert(contact Contact) (insertedContact Contact, err error)
+	Update(id int, contact Contact) (updatedContact Contact, err error)
 	Delete(id int) (deleted bool)
 }
 
@@ -27,14 +26,14 @@ func NewContactRepository(Conn *sql.DB) *dbContactRepository {
 	}
 }
 
-func (repository *dbContactRepository) GetAll() (results []datamodels.Contact) {
+func (repository *dbContactRepository) GetAll() (results []Contact) {
 	selDB, err := repository.Conn.Query("SELECT * FROM tblContato")
 
 	if err != nil {
 		panic(err.Error())
 	}
 	for selDB.Next() {
-		contact := datamodels.Contact{}
+		contact := Contact{}
 		err = selDB.Scan(&contact.Id, &contact.Name, &contact.Email, &contact.Phone)
 		if err != nil {
 			panic(err.Error())
@@ -44,12 +43,12 @@ func (repository *dbContactRepository) GetAll() (results []datamodels.Contact) {
 	return
 }
 
-func (repository *dbContactRepository) Get(contact datamodels.Contact) (results []datamodels.Contact) {
+func (repository *dbContactRepository) Get(contact Contact) (results []Contact) {
 
 	return results
 }
 
-func (repository *dbContactRepository) GetById(id int) (result datamodels.Contact) {
+func (repository *dbContactRepository) GetById(id int) (result Contact) {
 	stmt, err := repository.Conn.Prepare("SELECT * FROM tblContato where Id = ?")
 
 	if err != nil {
@@ -58,7 +57,7 @@ func (repository *dbContactRepository) GetById(id int) (result datamodels.Contac
 
 	res, err := stmt.Query(id)
 	for res.Next() {
-		contact := datamodels.Contact{}
+		contact := Contact{}
 		err = res.Scan(&contact.Id, &contact.Name, &contact.Email, &contact.Phone)
 		if err != nil {
 			panic(err.Error())
@@ -71,7 +70,7 @@ func (repository *dbContactRepository) GetById(id int) (result datamodels.Contac
 
 }
 
-func (repository *dbContactRepository) Insert(contact datamodels.Contact) (insertedContact datamodels.Contact, err error) {
+func (repository *dbContactRepository) Insert(contact Contact) (insertedContact Contact, err error) {
 	stmt, err := repository.Conn.Prepare("INSERT INTO tblContato(Name, Email, Phone) VALUES(?,?,?)")
 
 	res, err := stmt.Exec(contact.Name, contact.Email, contact.Phone)
@@ -88,7 +87,7 @@ func (repository *dbContactRepository) Insert(contact datamodels.Contact) (inser
 	return insertedContact, err
 }
 
-func (repository *dbContactRepository) Update(id int, contact datamodels.Contact) (updatedContact datamodels.Contact, err error) {
+func (repository *dbContactRepository) Update(id int, contact Contact) (updatedContact Contact, err error) {
 	stmt, err := repository.Conn.Prepare("UPDATE tblContato SET Nome = ?, Email = ?, Phone = ? WHERE Id = ?")
 
 	_, err = stmt.Exec(contact.Name, contact.Email, contact.Phone, id)

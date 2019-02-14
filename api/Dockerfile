@@ -2,16 +2,11 @@ FROM golang:1.11.5-alpine3.8 as build-stage
 
 RUN apk add --update git
 
-WORKDIR /go/src/api
-COPY datamodels/ ./datamodels/
-COPY repositories/ ./repositories/
-COPY services/ ./services/
-COPY shared/ ./shared/
-COPY main.go ./
+WORKDIR /go/src/app
+COPY *.go ./
 
 RUN go get -d -v ./...
-RUN go install
+RUN go install -v ./...
 
-FROM golang:1.11.5-alpine3.8 as production-stage
 EXPOSE 80
-CMD ["api"]
+CMD ["app"]
