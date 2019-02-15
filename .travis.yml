@@ -1,5 +1,7 @@
 dist: trusty
 
+privileged: true
+
 jobs:
   include:
     - stage: build docker image
