@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+
+  webapp:
+    image: gigiosouza/fiap-docker-webapp
+    ports:
+      - '4200:80'
+    links:
+      - api
+    depends_on:
+      - api
+    deploy:
+      replicas: 2      
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+
+  api:
+    image: gigiosouza/fiap-docker-api
+    environment:
+      DB_NAME: 'go'
+      DB_USER: 'root'
+      DB_PASSWORD: 123456
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    deploy:
+      replicas: 4      
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+
+  mysql:
+    image: gigiosouza/fiap-docker-mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'go'
+      MYSQL_ROOT_PASSWORD: 123456
+    deploy:
+      replicas: 1      
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  db-data:
