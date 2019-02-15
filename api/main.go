@@ -28,7 +28,7 @@ func main() {
 	app.Get("/contacts/{id:int}", func(ctx iris.Context) {
 		id, _ := ctx.Params().GetInt("id")
 		contact := contactService.GetById(id)
-		if &contact != nil {
+		if contact.Id != 0 {
 			ctx.JSON(contact)
 		}
 		ctx.StatusCode(iris.StatusNotFound)
@@ -62,14 +62,16 @@ func main() {
 		ctx.ReadJSON(&contact)
 		id, _ := ctx.Params().GetInt("id")
 
-		updatedContact, err := contactService.Update(id, contact)
-		if err == nil {
-			ctx.StatusCode(iris.StatusInternalServerError)
+		cont := contactService.GetById(id)
+
+		if cont.Id == 0 {
+			ctx.StatusCode(iris.StatusNotFound)
 			return
 		}
 
-		if &updatedContact == nil {
-			ctx.StatusCode(iris.StatusNotFound)
+		updatedContact, err := contactService.Update(id, contact)
+		if err != nil {
+			ctx.StatusCode(iris.StatusInternalServerError)
 			return
 		}
 
@@ -77,7 +79,7 @@ func main() {
 	})
 
 	app.Run(
-		// Start the web server at localhost:8080
+		// Start the web server at 80
 		iris.Addr(":80"),
 		// enables faster json serialization and more:
 		iris.WithOptimizations,

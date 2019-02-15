@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -92,7 +93,11 @@ func (repository *dbContactRepository) Insert(contact Contact) (insertedContact 
 }
 
 func (repository *dbContactRepository) Update(id int, contact Contact) (updatedContact Contact, err error) {
-	stmt, err := repository.Conn.Prepare("UPDATE tblContato SET Nome = ?, Email = ?, Phone = ? WHERE Id = ?")
+	stmt, err := repository.Conn.Prepare("UPDATE tblContato SET Name = ?, Email = ?, Phone = ? WHERE Id = ?")
+
+	if err != nil {
+		panic(err.Error())
+	}
 
 	_, err = stmt.Exec(contact.Name, contact.Email, contact.Phone, id)
 	if err != nil {
