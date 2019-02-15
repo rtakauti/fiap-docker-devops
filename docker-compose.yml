@@ -27,6 +27,8 @@ services:
     build: mysql/.
     ports:
       - '3306:3306'
+    volumes:
+      - /var/lib/mysql
     environment:
       MYSQL_DATABASE: 'go'
       MYSQL_ROOT_PASSWORD: 123456
