@@ -3,12 +3,12 @@ dist: trusty
 jobs:
   include:
     - stage: build docker image
-    script: 
-    - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
-    - docker build -t gigiosouza/fiap-docker-webapp webapp/
-    - docker build -t gigiosouza/fiap-docker-api api/
-    - docker build -t gigiosouza/fiap-docker-mysql mysql/
-    - docker push gigiosouza/fiap-docker-webapp
-    - docker push gigiosouza/fiap-docker-api
-    - docker push gigiosouza/fiap-docker-mysql
-    - docker images
+      script: 
+        - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+        - docker build -t gigiosouza/fiap-docker-webapp webapp/
+        - docker build -t gigiosouza/fiap-docker-api api/
+        - docker build -t gigiosouza/fiap-docker-mysql mysql/
+        - docker push gigiosouza/fiap-docker-webapp
+        - docker push gigiosouza/fiap-docker-api
+        - docker push gigiosouza/fiap-docker-mysql
+        - docker images
