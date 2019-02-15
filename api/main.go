@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+
 	"github.com/kataras/iris"
 )
 
@@ -49,7 +50,7 @@ func main() {
 		ctx.ReadJSON(&contact)
 
 		inserterContact, err := contactService.Insert(contact)
-		if err == nil {
+		if err != nil {
 			ctx.StatusCode(iris.StatusInternalServerError)
 			return
 		}
@@ -61,7 +62,7 @@ func main() {
 		ctx.ReadJSON(&contact)
 		id, _ := ctx.Params().GetInt("id")
 
-		updatedContact, err := contactService.Update(id,contact)
+		updatedContact, err := contactService.Update(id, contact)
 		if err == nil {
 			ctx.StatusCode(iris.StatusInternalServerError)
 			return
