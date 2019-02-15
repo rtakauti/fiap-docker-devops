@@ -9,7 +9,7 @@ after_script:
   - docker images
 
 before_deploy:
-  - echo "${DOCKER_HUB_PASSWORD}" | docker login --username "${DOCKER_HUB_USER}" --password-stdin
+  - echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USER --password-stdin
 
 deploy:
   provider: script
