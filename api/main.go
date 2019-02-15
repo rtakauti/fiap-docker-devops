@@ -15,6 +15,7 @@ func main() {
 		DBPass:   os.Getenv("DB_PASSWORD"),
 		DBName:   os.Getenv("DB_NAME"),
 	}
+
 	repo := NewContactRepository(DBConn(conf))
 
 	contactService := NewContactService(repo)

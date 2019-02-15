@@ -71,7 +71,7 @@ func (repository *dbContactRepository) GetById(id int) (result Contact) {
 }
 
 func (repository *dbContactRepository) Insert(contact Contact) (insertedContact Contact, err error) {
-	stmt, err := repository.Conn.Prepare("INSERT INTO tblContato(Name, Email, Phone) VALUES(?,?,?)")
+	stmt, err := repository.Conn.Prepare("INSERT INTO tblContato (Name, Email, Phone) VALUES(?,?,?)")
 
 	res, err := stmt.Exec(contact.Name, contact.Email, contact.Phone)
 	if err != nil {
@@ -79,6 +79,10 @@ func (repository *dbContactRepository) Insert(contact Contact) (insertedContact 
 	}
 
 	id, err := res.LastInsertId()
+
+	if err != nil {
+		panic(err.Error())
+	}
 
 	contact.Id = int(id)
 

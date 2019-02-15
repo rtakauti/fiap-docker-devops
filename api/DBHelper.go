@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -14,13 +15,15 @@ type DatabaseConf struct {
 
 // DBConn retorna conexa com o dabatase
 func DBConn(conf *DatabaseConf) (db *sql.DB) {
-	dbDriver := conf.DBDriver
-	dbUser := conf.DBUser
-	dbPass := conf.DBPass
-	dbName := conf.DBName
-	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
+	connectionUrl := fmt.Sprintf("%s:%s@%s(%s:%d)/%s", conf.DBUser, conf.DBPass, "tcp", "mysql", 3306, conf.DBName)
+
+	fmt.Println("Conexão com banco de dados: " + connectionUrl)
+
+	db, err := sql.Open(conf.DBDriver, connectionUrl)
+
 	if err != nil {
 		panic(err.Error())
 	}
+
 	return db
 }
