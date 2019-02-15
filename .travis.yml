@@ -1,0 +1,21 @@
+language: bash
+services: docker
+script:
+  - docker build -t gigiosouza/fiap-docker-webapp webapp/
+  - docker build -t gigiosouza/fiap-docker-api api/
+  - docker build -t gigiosouza/fiap-docker-mysql mysql/
+
+after_script:
+  - docker images
+
+before_deploy:
+  - echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USER --password-stdin
+
+deploy:
+  provider: script
+  script:
+    - docker push gigiosouza/fiap-docker-webapp
+    - docker push gigiosouza/fiap-docker-api
+    - docker push gigiosouza/fiap-docker-mysql
+  on:
+    branch: master
