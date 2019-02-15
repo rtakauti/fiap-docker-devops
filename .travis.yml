@@ -11,3 +11,4 @@ jobs:
     - docker push gigiosouza/fiap-docker-webapp
     - docker push gigiosouza/fiap-docker-api
     - docker push gigiosouza/fiap-docker-mysql
+    - docker images
