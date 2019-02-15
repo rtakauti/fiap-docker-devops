@@ -66,7 +66,6 @@ func main() {
 
 		if cont.Id == 0 {
 			ctx.StatusCode(iris.StatusNotFound)
-			return
 		}
 
 		updatedContact, err := contactService.Update(id, contact)

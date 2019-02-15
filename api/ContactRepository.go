@@ -68,7 +68,6 @@ func (repository *dbContactRepository) GetById(id int) (result Contact) {
 
 	defer res.Close()
 	return
-
 }
 
 func (repository *dbContactRepository) Insert(contact Contact) (insertedContact Contact, err error) {

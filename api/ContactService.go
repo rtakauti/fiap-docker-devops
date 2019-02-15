@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // ContactService interface
 type ContactService interface {
 	GetAll() []Contact
@@ -45,6 +43,5 @@ func (s *ContactServiceRepo) Insert(item Contact) (Contact, error) {
 
 // Insert insert item
 func (s *ContactServiceRepo) Update(id int, item Contact) (Contact, error) {
-	fmt.Println(item)
 	return s.Repo.Update(id, item)
 }
