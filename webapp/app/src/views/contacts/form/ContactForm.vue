@@ -43,7 +43,7 @@
               <b-button
                 v-if="isEditing"
                 variant="danger"
-                @submit="onDelete">
+                @click="onDelete">
                 Deletar
               </b-button>
             </b-col>
@@ -134,9 +134,12 @@
     axios.delete(`/contacts/${this.id}`)
       .then(({ data }) => {
         new Noty({
-          text: 'Contato deletato com sucesso',
-          type: 'error'
+          text: 'Contato deletado com sucesso',
+          type: 'success'
         }).show();
+        this.$router.replace({
+          name: 'contacts'
+        });
       });
   }
 
@@ -192,6 +195,15 @@
           this.name = this.contact.name;
           this.email = this.contact.email;
           this.phone = this.contact.phone;
+        })
+        .catch(() => {
+          new Noty({
+            text: 'Contato não encontrado',
+            type: 'error'
+          }).show();
+          this.$router.replace({
+            name: 'contacts'
+          });
         });
     }
   }

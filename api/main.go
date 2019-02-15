@@ -49,7 +49,7 @@ func main() {
 		ctx.ReadJSON(&contact)
 
 		inserterContact, err := contactService.Insert(contact)
-		if err == nil {
+		if err != nil {
 			ctx.StatusCode(iris.StatusInternalServerError)
 			return
 		}
@@ -62,7 +62,7 @@ func main() {
 		id, _ := ctx.Params().GetInt("id")
 
 		updatedContact, err := contactService.Update(id,contact)
-		if err == nil {
+		if err != nil {
 			ctx.StatusCode(iris.StatusInternalServerError)
 			return
 		}
