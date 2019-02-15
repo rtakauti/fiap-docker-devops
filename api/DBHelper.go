@@ -17,8 +17,6 @@ type DatabaseConf struct {
 func DBConn(conf *DatabaseConf) (db *sql.DB) {
 	connectionUrl := fmt.Sprintf("%s:%s@%s(%s:%d)/%s", conf.DBUser, conf.DBPass, "tcp", "mysql", 3306, conf.DBName)
 
-	fmt.Println("Conexão com banco de dados: " + connectionUrl)
-
 	db, err := sql.Open(conf.DBDriver, connectionUrl)
 
 	if err != nil {

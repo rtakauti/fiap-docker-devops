@@ -61,7 +61,7 @@ func main() {
 		ctx.ReadJSON(&contact)
 		id, _ := ctx.Params().GetInt("id")
 
-		updatedContact, err := contactService.Update(id,contact)
+		updatedContact, err := contactService.Update(id, contact)
 		if err != nil {
 			ctx.StatusCode(iris.StatusInternalServerError)
 			return
