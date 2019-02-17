@@ -2,7 +2,7 @@ version: '2'
 services:
 
   webapp:
-    build: webapp/.
+    image: gigiosouza/fiap-docker-webapp
     ports:
       - '4200:80'
     links:
@@ -11,7 +11,7 @@ services:
       - api
 
   api:
-    build: api/.
+    image: gigiosouza/fiap-docker-api
     environment:
       DB_NAME: 'go'
       DB_USER: 'root'
@@ -22,7 +22,7 @@ services:
       - mysql
 
   mysql:
-    build: mysql/.
+    image: gigiosouza/fiap-docker-mysql
     ports:
       - '3306:3306'
     volumes:
