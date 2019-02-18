@@ -6,7 +6,7 @@ jobs:
   include:
     - stage: build docker image
       script: 
-        - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+        - echo '$DOCKER_HUB_PASSWORD' | docker login -u '$DOCKER_HUB_USERNAME' --password-stdin
         - docker build -t gigiosouza/fiap-docker-webapp webapp/
         - docker build -t gigiosouza/fiap-docker-api api/
         - docker build -t gigiosouza/fiap-docker-mysql mysql/
